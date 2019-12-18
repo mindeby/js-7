@@ -1,27 +1,15 @@
 import React from 'react';
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 
-const Nav = (props) => {
-  <BrowserRouter>
-  <div className="main-nav">
-    <Route path="/cats"  />
-    <Route path="/dogs"/>
-    <Route path="/computers"/>
-  </div>
-</BrowserRouter>
-}
+
+const Nav = () => (
+  <nav className="main-nav">
+    <ul>
+      <li><NavLink to="">Sky</NavLink></li>
+      <li><NavLink to="">Sea</NavLink></li>
+      <li><NavLink to="">landscapes</NavLink></li>
+    </ul>
+  </nav>
+)
 
 export default Nav;
-
-
-<nav class="main-nav">
-  <ul>
-    <li><a href='#'>Cats</a></li>
-    <li><a href='#'>Dogs</a></li>
-    <li><a href='#'>Computers</a></li>
-  </ul>
-</nav>

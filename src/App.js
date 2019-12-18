@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import PhotoList from "./components/PhotoList"
 import SearchForm from "./components/SearchForm"
+import Nav from "./components/Nav"
 import axios from 'axios';
+
+import {
+  BrowserRouter,
+  Route,
+  Switch
+} from 'react-router-dom';
 
 
 import './App.css';
@@ -15,7 +22,7 @@ class App extends Component {
       images: [
 
       ],
-      loading: true
+      loading: true,
     };
   }
 
@@ -23,12 +30,12 @@ class App extends Component {
     this.performSearch();
   }
 
-  performSearch = (query = 'sunsets') => {
+  performSearch = (query = 'landscapes') => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
           images: response.data.photos.photo,
-          loading: false
+          loading: false,
         });
       })
       .catch(error => {
@@ -39,10 +46,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <SearchForm onSearch={this.performSearch} />
-        <PhotoList data={this.state.images}/>
-      </div>
+      <BrowserRouter>
+        <div className="container">
+          <SearchForm onSearch={this.performSearch} />
+          <Nav />
+            <Switch>
+              <Route exact path="/" render={ () => <PhotoList data={this.state.images} /> } />
+            </Switch>
+          </div>
+        </BrowserRouter>
     );
   }
 }
