@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PhotoList from "./components/PhotoList"
+import SearchForm from "./components/SearchForm"
 import axios from 'axios';
 
 
@@ -39,6 +40,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <SearchForm onSearch={this.performSearch} />
         <PhotoList data={this.state.images}/>
       </div>
     );
