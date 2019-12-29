@@ -4,33 +4,30 @@ import SearchForm from "./components/SearchForm"
 import Nav from "./components/Nav"
 import axios from 'axios';
 
+import './App.css';
+import apiKey from './config.js';
+
 import {
   BrowserRouter,
   Route,
   Switch
 } from 'react-router-dom';
 
-
-import './App.css';
-import apiKey from './config.js';
-
 class App extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      images: [
 
-      ],
-      loading: true,
-    };
+  state = {
+    images: [
+
+    ],
+    loading: true
   }
 
   componentDidMount() {
-    this.performSearch();
+    this.performSearch("giraffe");
   }
 
-  performSearch = (query = 'landscapes') => {
+  performSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -46,12 +43,15 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div className="container">
-          <SearchForm onSearch={this.performSearch} />
-          <Nav />
+        <BrowserRouter>
+          <div className="container">
+            <SearchForm onSearch={this.performSearch} />
+            <Nav onSearch={this.performSearch}/>
+            <PhotoList data={this.state.images}/>
             <Switch>
-              <Route exact path="/" render={ () => <PhotoList data={this.state.images} /> } />
+              <Route path="/plants" render={ () => this.performSearch('plants') } />
+              <Route path="/sea" render={ () => this.performSearch('sea') } />
+              <Route path="/landscapes" render={ () => this.performSearch('landscapes') } />
             </Switch>
           </div>
         </BrowserRouter>
