@@ -8,7 +8,7 @@ export default class PhotoList extends Component {
     const results = this.props.data;
 
     let photos;
-    if (results) {
+    if (results.length) {
       photos = results.map(photo => <Photo url={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} key={photo.id} />);
     } else {
       photos = <NoPhotos />
