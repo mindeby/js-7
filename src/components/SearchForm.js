@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export default class SearchForm extends Component {
 
