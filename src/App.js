@@ -10,21 +10,57 @@ import apiKey from './config.js';
 import {
   BrowserRouter,
   Route,
-  Switch
+  Switch,
 } from 'react-router-dom';
 
 class App extends Component {
 
 
   state = {
-    images: [
-
-    ],
+    images: [],
+    fish: [],
+    plants:[],
+    birds:[],
     loading: true
   }
 
   componentDidMount() {
-    this.performSearch("giraffe");
+    this.performSearch("stars");
+    //get images of fish
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=fish&per_page=24&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          fish: response.data.photos.photo,
+          loading: false,
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+
+    //get images of plants
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=plants&per_page=24&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          plants: response.data.photos.photo,
+          loading: false,
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+
+    //get images of birds
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=birds&per_page=24&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          birds: response.data.photos.photo,
+          loading: false,
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
   }
 
   performSearch = (query) => {
@@ -34,6 +70,7 @@ class App extends Component {
           images: response.data.photos.photo,
           loading: false,
         });
+        console.log(query)
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
@@ -46,12 +83,13 @@ class App extends Component {
         <BrowserRouter>
           <div className="container">
             <SearchForm onSearch={this.performSearch} />
-            <Nav onSearch={this.performSearch}/>
-            <PhotoList data={this.state.images}/>
+            <Nav/>
             <Switch>
-              <Route path="/plants" render={ () => this.performSearch('plants') } />
-              <Route path="/sea" render={ () => this.performSearch('sea') } />
-              <Route path="/landscapes" render={ () => this.performSearch('landscapes') } />
+              <Route exact path="/" render={ () => <PhotoList data={this.state.images}/> } />
+              <Route path="/fish" render={ () => <PhotoList data={this.state.fish}/> } />
+              <Route path="/plants" render={ () => <PhotoList data={this.state.plants}/> } />
+              <Route path="/birds" render={ () => <PhotoList data={this.state.birds}/> } />
+              <Route path="/:search" render={ () => <PhotoList data={this.state.images}/> } />
             </Switch>
           </div>
         </BrowserRouter>
