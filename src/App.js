@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PhotoList from "./components/PhotoList"
 import SearchForm from "./components/SearchForm"
 import Nav from "./components/Nav"
+import NotFound from "./components/NotFound"
 import axios from 'axios';
 
 import './App.css';
@@ -32,7 +33,6 @@ class App extends Component {
       .then(response => {
         this.setState({
           fish: response.data.photos.photo,
-          loading: false,
         });
       })
       .catch(error => {
@@ -44,7 +44,6 @@ class App extends Component {
       .then(response => {
         this.setState({
           plants: response.data.photos.photo,
-          loading: false,
         });
       })
       .catch(error => {
@@ -56,7 +55,6 @@ class App extends Component {
       .then(response => {
         this.setState({
           birds: response.data.photos.photo,
-          loading: false,
         });
       })
       .catch(error => {
@@ -65,6 +63,9 @@ class App extends Component {
   }
 
   performSearch = (query) => {
+    this.setState({
+      loading: true,
+    });
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -84,15 +85,22 @@ class App extends Component {
     return (
         <BrowserRouter>
           <div className="container">
-            <SearchForm onSearch={this.performSearch} />
-            <Nav/>
-            <Switch>
-              <Route exact path="/" render={ () => <PhotoList data={this.state.images} query={this.state.query}/> } />
-              <Route path="/fish" render={ () => <PhotoList data={this.state.fish} query="Fish" /> } />
-              <Route path="/plants" render={ () => <PhotoList data={this.state.plants} query="Plants" /> } />
-              <Route path="/birds" render={ () => <PhotoList data={this.state.birds} query="Birds"/> } />
-              <Route path="/:search" render={ () => <PhotoList data={this.state.images} query={this.state.query}/> } />
-            </Switch>
+          <SearchForm onSearch={this.performSearch} />
+          <Nav/>
+            {
+              (this.state.loading)
+              ?
+              <p>Loading...</p>
+              :
+              <Switch>
+                <Route exact path="/" render={ () => <PhotoList data={this.state.images} query={this.state.query}/> } />
+                <Route path="/fish" render={ () => <PhotoList data={this.state.fish} query="Fish" /> } />
+                <Route path="/plants" render={ () => <PhotoList data={this.state.plants} query="Plants" /> } />
+                <Route path="/birds" render={ () => <PhotoList data={this.state.birds} query="Birds"/> } />
+                <Route path="/:search" render={ () => <PhotoList data={this.state.images} query={this.state.query}/> } />
+                <Route  component={NotFound} />
+              </Switch>
+            }
           </div>
         </BrowserRouter>
     );
