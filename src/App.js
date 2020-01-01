@@ -12,6 +12,7 @@ import {
   BrowserRouter,
   Route,
   Switch,
+  Redirect
 } from 'react-router-dom';
 
 class App extends Component {
@@ -94,11 +95,11 @@ class App extends Component {
               :
               <Switch>
                 <Route exact path="/" render={ () => <PhotoList data={this.state.images} query={this.state.query}/> } />
-                <Route path="/fish" render={ () => <PhotoList data={this.state.fish} query="Fish" /> } />
-                <Route path="/plants" render={ () => <PhotoList data={this.state.plants} query="Plants" /> } />
-                <Route path="/birds" render={ () => <PhotoList data={this.state.birds} query="Birds"/> } />
-                <Route path="/:search" render={ () => <PhotoList data={this.state.images} query={this.state.query}/> } />
-                <Route  component={NotFound} />
+                <Route path="/search/fish" render={ () => <PhotoList data={this.state.fish} query="Fish" /> } />
+                <Route path="/search/plants" render={ () => <PhotoList data={this.state.plants} query="Plants" /> } />
+                <Route path="/search/birds" render={ () => <PhotoList data={this.state.birds} query="Birds"/> } />
+                <Route path="/search/:query" render={ () => <PhotoList data={this.state.images} query={this.state.query}/> } />
+                <Route component={NotFound} />
               </Switch>
             }
           </div>

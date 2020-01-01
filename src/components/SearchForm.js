@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import NotFound from "./NotFound"
+
 
 export default class SearchForm extends Component {
 
@@ -29,7 +31,11 @@ export default class SearchForm extends Component {
             <path d="M0 0h24v24H0z" fill="none"/>
           </svg>
           {
-            <Redirect to={ `/${this.state.searchText}` }/>
+            (this.state.searchText)
+            ?
+            <Redirect to={ `/search/${this.state.searchText}` }/>
+            :
+            null
           }
         </button>
       </form>
