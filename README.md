@@ -1,5 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+Instructions on how to
 To start project go to terminal
 open project directory
 install project dependencies with npm install
