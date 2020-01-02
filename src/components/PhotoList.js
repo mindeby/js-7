@@ -2,6 +2,7 @@ import React from 'react';
 import Photo from './Photo';
 import NoPhotos from './NoPhotos';
 
+
 const PhotoList = (props) => {
 
   const results = props.data;

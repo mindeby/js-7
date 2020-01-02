@@ -5,6 +5,12 @@ open project directory
 install project dependencies with npm install
 run npm start
 
+create config.js file for your api key inside your src files:
+
+const apiKey = '[your api key]';
+export default apiKey;
+
+
 
 ## Available Scripts
 
