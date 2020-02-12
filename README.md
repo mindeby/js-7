@@ -1,9 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+This project was part of module 7 of the Full Stack JavaScript Course from Treehouse.
+It consists of api calls to the flicker api rendering the search results into a gallery built using React.
+
 Instructions on how to
 To start project go to terminal
 open project directory
-install project dependencies with npm install
-run npm start
+install project dependencies run yarn start
 
 create config.js file for your api key inside your src files:
 
